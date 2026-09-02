@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista zadań w projekcie</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-base-200 min-h-screen pb-10">
+
+  <header class="bg-base-100 shadow-md mb-6">
+    <div class="max-w-7xl mx-auto p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <h1 class="text-2xl font-bold text-primary">Lista zadań w projekcie</h1>
+      <div class="flex flex-wrap gap-2 items-center">
+        <button id="btn-add-task" class="btn btn-primary btn-sm sm:btn-md">
+          Dodaj nowe zadanie
+        </button>
+        <button id="btn-clear-all" class="btn btn-error btn-outline btn-sm sm:btn-md">
+          Wyczyść listę
+        </button>
+        
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-neutral btn-sm sm:btn-md">Opcje</div>
+          <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mt-1">
+            <li><a id="sort-desc">Sortuj od najnowszych</a></li>
+            <li><a id="sort-asc">Sortuj od najstarszych</a></li>
+            <li><a id="sort-name">Sortuj alfabetycznie</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 space-y-6">
+    
+    <section class="collapse collapse-arrow bg-base-100 shadow-sm border border-base-300" id="filter-collapse">
+      <input type="checkbox" id="filter-toggle" /> 
+      <div class="collapse-title text-lg font-medium flex justify-between items-center">
+        <span>Filtry i Wyszukiwanie</span>
+      </div>
+      <div class="collapse-content space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+          <div class="form-control">
+            <label class="label"><span class="label-text">Szukaj w tytule</span></label>
+            <input type="text" id="filter-title" placeholder="Wpisz frazę..." class="input input-bordered w-full input-sm" />
+          </div>
+          <div class="form-control">
+            <label class="label"><span class="label-text">Osoba odpowiedzialna</span></label>
+            <input type="text" id="filter-person" placeholder="Imię i nazwisko..." class="input input-bordered w-full input-sm" />
+          </div>
+          <div class="form-control">
+            <label class="label"><span class="label-text">Status</span></label>
+            <select id="filter-status" class="select select-bordered w-full select-sm">
+              <option value="">Wszystkie</option>
+              <option value="do zrobienia">Do zrobienia</option>
+              <option value="w trakcie">W trakcie</option>
+              <option value="zrobione">Zrobione</option>
+            </select>
+          </div>
+          <div class="form-control">
+            <label class="label"><span class="label-text">Priorytet</span></label>
+            <select id="filter-priority" class="select select-bordered w-full select-sm">
+              <option value="">Wszystkie</option>
+              <option value="niski">Niski</option>
+              <option value="sredni">Średni</option>
+              <option value="wysoki">Wysoki</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-base-100 shadow-md rounded-box overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>Tytuł</th>
+              <th>Osoba</th>
+              <th>Priorytet</th>
+              <th>Status</th>
+              <th>Termin</th>
+              <th>Uwagi</th>
+              <th>Zaległe?</th>
+              <th class="text-right">Akcje</th>
+            </tr>
+          </thead>
+          <tbody id="tasks-table-body">
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="stats stats-vertical lg:stats-horizontal shadow w-full bg-base-100">
+      <div class="stat">
+        <div class="stat-title">Wszystkie zadania</div>
+        <div class="stat-value text-primary" id="stat-total">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Do zrobienia</div>
+        <div class="stat-value text-neutral" id="stat-todo">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">W trakcie</div>
+        <div class="stat-value text-info" id="stat-in-progress">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Zrobione</div>
+        <div class="stat-value text-success" id="stat-done">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Zaległe</div>
+        <div class="stat-value text-error" id="stat-overdue">0</div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="modal-task" class="modal">
+    <div class="modal-box max-w-lg">
+      <h3 class="font-bold text-lg mb-4" id="modal-task-title">Dodaj nowe zadanie</h3>
+      <form id="form-task" class="space-y-4">
+        <input type="hidden" id="task-id" />
+        
+        <div class="form-control">
+          <label class="label"><span class="label-text">Tytuł zadania *</span></label>
+          <input type="text" id="task-title" required class="input input-bordered w-full" />
+        </div>
+        
+        <div class="form-control">
+          <label class="label"><span class="label-text">Opis</span></label>
+          <textarea id="task-desc" class="textarea textarea-bordered w-full" rows="3"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="form-control">
+            <label class="label"><span class="label-text">Priorytet *</span></label>
+            <select id="task-priority" required class="select select-bordered w-full">
+              <option value="" disabled selected>Wybierz...</option>
+              <option value="niski">Niski</option>
+              <option value="sredni">Średni</option>
+              <option value="wysoki">Wysoki</option>
+            </select>
+          </div>
+
+          <div class="form-control">
+            <label class="label"><span class="label-text">Status *</span></label>
+            <select id="task-status" required class="select select-bordered w-full">
+              <option value="" disabled selected>Wybierz...</option>
+              <option value="do zrobienia">Do zrobienia</option>
+              <option value="w trakcie">W trakcie</option>
+              <option value="zrobione">Zrobione</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="form-control">
+            <label class="label"><span class="label-text">Termin wykonania *</span></label>
+            <input type="date" id="task-due-date" required class="input input-bordered w-full" />
+          </div>
+
+          <div class="form-control">
+            <label class="label"><span class="label-text">Osoba odpowiedzialna *</span></label>
+            <input type="text" id="task-person" required class="input input-bordered w-full" />
+          </div>
+        </div>
+
+        <div class="modal-action">
+          <button type="button" class="btn" onclick="document.getElementById('modal-task').close()">Anuluj</button>
+          <button type="submit" class="btn btn-primary">Zapisz</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog id="modal-details" class="modal">
+    <div class="modal-box max-w-2xl">
+      <h3 class="font-bold text-xl mb-2" id="detail-title">Szczegóły zadania</h3>
+      <p class="text-sm text-gray-500 mb-4" id="detail-meta"></p>
+      
+      <div class="bg-base-200 p-3 rounded-box mb-6">
+        <h4 class="font-semibold text-sm mb-1">Opis:</h4>
+        <p id="detail-desc" class="text-sm whitespace-pre-wrap">Brak opisu.</p>
+      </div>
+
+      <hr class="my-4" />
+
+      <h4 class="font-bold text-lg mb-3">Uwagi do zadania</h4>
+
+      <form id="form-note" class="flex gap-2 mb-4">
+        <input type="hidden" id="note-id" />
+        <input type="text" id="note-text" placeholder="Dodaj treść uwagi..." required class="input input-bordered flex-1 input-sm sm:input-md" />
+        <button type="submit" class="btn btn-primary btn-sm sm:btn-md" id="btn-save-note">Dodaj uwagę</button>
+        <button type="button" class="btn btn-ghost btn-sm sm:btn-md hidden" id="btn-cancel-note">Anuluj edycję</button>
+      </form>
+
+      <div class="overflow-x-auto max-h-48 overflow-y-auto border border-base-200 rounded-box mb-4">
+        <table class="table table-zebra w-full table-xs sm:table-sm">
+          <thead>
+            <tr>
+              <th>Treść</th>
+              <th>Data utworzenia</th>
+              <th class="text-right">Akcje</th>
+            </tr>
+          </thead>
+          <tbody id="notes-table-body">
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-action">
+        <button type="button" class="btn" onclick="document.getElementById('modal-details').close()">Zamknij</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>

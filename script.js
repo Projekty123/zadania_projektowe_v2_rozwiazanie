@@ -145,8 +145,8 @@ function getFilteredAndSortedTasks() {
             return a.tytul.localeCompare(b.tytul);
         }
 
-        const dateA = new Date(a.termin);
-        const dateB = new Date(b.termin);
+        const dateA = new Date(a.data_dodania);
+        const dateB = new Date(b.data_dodania);
 
         return app.currentSort === 'asc'
             ? dateA - dateB

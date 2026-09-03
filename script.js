@@ -125,18 +125,20 @@ function getFilteredAndSortedTasks() {
         .value
         .toLowerCase();
 
-    const status =
-        document.getElementById('filter-status').value;
+   const statuses = Array.from(
+        document.querySelectorAll('.filter-status:checked')
+    ).map(checkbox => checkbox.value);
 
-    const priority =
-        document.getElementById('filter-priority').value;
+    const priorities = Array.from(
+        document.querySelectorAll('.filter-priority:checked')
+    ).map(checkbox => checkbox.value);
 
     const filteredTasks = app.tasks.filter(task => {
         return (
             task.tytul.toLowerCase().includes(title) &&
             task.osoba.toLowerCase().includes(person) &&
-            (!status || task.status === status) &&
-            (!priority || task.priorytet === priority)
+            (statuses.length === 0 || statuses.includes(task.status)) &&
+            (priorities.length === 0 || priorities.includes(task.priorytet))
         );
     });
 
@@ -584,13 +586,13 @@ document.addEventListener('DOMContentLoaded', () => {
         .getElementById('filter-person')
         .addEventListener('input', app.render);
 
-    document
-        .getElementById('filter-status')
-        .addEventListener('change', app.render);
+    document.querySelectorAll('.filter-status').forEach(checkbox => {
+        checkbox.addEventListener('change', app.render);
+        });
 
-    document
-        .getElementById('filter-priority')
-        .addEventListener('change', app.render);
+    document.querySelectorAll('.filter-priority').forEach(checkbox => {
+        checkbox.addEventListener('change', app.render);
+    });
 
     document
         .getElementById('sort-desc')

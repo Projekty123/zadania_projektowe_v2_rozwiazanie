@@ -53,23 +53,63 @@
             <input type="text" id="filter-person" placeholder="Imię i nazwisko..." class="input input-bordered w-full input-sm" />
           </div>
           <div class="form-control">
-            <label class="label"><span class="label-text">Status</span></label>
-            <select id="filter-status" class="select select-bordered w-full select-sm">
-              <option value="">Wszystkie</option>
-              <option value="do zrobienia">Do zrobienia</option>
-              <option value="w trakcie">W trakcie</option>
-              <option value="zrobione">Zrobione</option>
-            </select>
-          </div>
+    <label class="label">
+        <span class="label-text">Status</span>
+    </label>
+
+    <div class="dropdown w-full">
+            <label tabindex="0" class="btn btn-outline btn-sm w-full justify-between">
+                Wybierz statusy
+                <span>▼</span>
+            </label>
+
+            <div tabindex="0" class="dropdown-content z-[1] p-3 shadow bg-base-100 rounded-box w-full">
+                <label class="label cursor-pointer justify-start gap-3">
+                    <input type="checkbox" value="do zrobienia" class="checkbox filter-status">
+                    <span class="label-text">Do zrobienia</span>
+                </label>
+
+                <label class="label cursor-pointer justify-start gap-3">
+                    <input type="checkbox" value="w trakcie" class="checkbox filter-status">
+                    <span class="label-text">W trakcie</span>
+                </label>
+
+                <label class="label cursor-pointer justify-start gap-3">
+                    <input type="checkbox" value="zrobione" class="checkbox filter-status">
+                    <span class="label-text">Zrobione</span>
+                </label>
+            </div>
+        </div>
+    </div>
           <div class="form-control">
-            <label class="label"><span class="label-text">Priorytet</span></label>
-            <select id="filter-priority" class="select select-bordered w-full select-sm">
-              <option value="">Wszystkie</option>
-              <option value="niski">Niski</option>
-              <option value="sredni">Średni</option>
-              <option value="wysoki">Wysoki</option>
-            </select>
-          </div>
+    <label class="label">
+        <span class="label-text">Priorytet</span>
+    </label>
+
+    <div class="dropdown w-full">
+        <label tabindex="0" class="btn btn-outline btn-sm w-full justify-between">
+            Wybierz priorytety
+            <span>▼</span>
+        </label>
+
+        <div tabindex="0" class="dropdown-content z-[1] p-3 shadow bg-base-100 rounded-box w-full">
+            <label class="label cursor-pointer justify-start gap-3">
+                <input type="checkbox" value="niski" class="checkbox filter-priority">
+                <span class="label-text">Niski</span>
+            </label>
+
+            <label class="label cursor-pointer justify-start gap-3">
+                <input type="checkbox" value="sredni" class="checkbox filter-priority">
+                <span class="label-text">Średni</span>
+            </label>
+
+            <label class="label cursor-pointer justify-start gap-3">
+                <input type="checkbox" value="wysoki" class="checkbox filter-priority">
+                <span class="label-text">Wysoki</span>
+            </label>
+        </div>
+    </div>
+</div>
         </div>
       </div>
     </section>

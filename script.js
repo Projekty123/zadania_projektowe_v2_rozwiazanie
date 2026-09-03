@@ -53,6 +53,7 @@ app.saveTaskData = function (taskData) {
         app.tasks.push({
             ...taskData,
             id: Date.now(),
+            data_dodania: new Date().toISOString(),
             uwagi: []
         });
     }

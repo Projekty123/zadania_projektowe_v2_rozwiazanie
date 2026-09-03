@@ -6,6 +6,7 @@
   <title>Lista zadań w projekcie</title>
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="bg-base-200 min-h-screen pb-10">
 
@@ -14,10 +15,12 @@
       <h1 class="text-2xl font-bold text-primary">Lista zadań w projekcie</h1>
       <div class="flex flex-wrap gap-2 items-center">
         <button id="btn-add-task" class="btn btn-primary btn-sm sm:btn-md">
-          Dodaj nowe zadanie
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            Dodaj nowe zadanie
         </button>
         <button id="btn-clear-all" class="btn btn-error btn-outline btn-sm sm:btn-md">
-          Wyczyść listę
+            <i data-lucide="trash-2" class="w-5 h-5"></i>
+            Wyczyść listę
         </button>
         
         <div class="dropdown dropdown-end">

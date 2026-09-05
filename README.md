@@ -26,7 +26,7 @@ Aplikacja posiada również podsumowanie, w którym można zobaczyć liczbę wsz
 
 Do uruchomienia aplikacji nie jest potrzebny serwer ani dodatkowe programy.
 
-Wystarczy otworzyć plik `index.html` w przeglądarce. Aplikacja korzysta z HTML, CSS i JavaScript oraz bibliotek Tailwind CSS, DaisyUI i Lucide.
+Wystarczy otworzyć plik `index.html` w przeglądarce. Aplikacja korzysta z HTML, CSS i JavaScript oraz bibliotek Tailwind CSS, DaisyUI
 
 ## localStorage
 

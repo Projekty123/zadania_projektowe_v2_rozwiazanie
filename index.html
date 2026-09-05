@@ -1,263 +1,405 @@
 <!DOCTYPE html>
-<html lang="pl" data-theme="light">
+<html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lista zadań w projekcie</title>
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista zadań w projekcie</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-base-200 min-h-screen pb-10">
 
-  <header class="bg-base-100 shadow-md mb-6">
-    <div class="max-w-7xl mx-auto p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-      <h1 class="text-2xl font-bold text-primary">Lista zadań w projekcie</h1>
-      <div class="flex flex-wrap gap-2 items-center">
-        <button id="btn-add-task" class="btn btn-primary btn-sm sm:btn-md">
-            <i data-lucide="plus" class="w-5 h-5"></i>
-            Dodaj nowe zadanie
-        </button>
-        <button id="btn-clear-all" class="btn btn-error btn-outline btn-sm sm:btn-md">
-            <i data-lucide="trash-2" class="w-5 h-5"></i>
-            Wyczyść listę
-        </button>
-        
-        <div class="dropdown dropdown-end">
-          <div tabindex="0" role="button" class="btn btn-neutral btn-sm sm:btn-md">Opcje</div>
-          <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mt-1">
-            <li><a id="sort-desc">Sortuj od najnowszych</a></li>
-            <li><a id="sort-asc">Sortuj od najstarszych</a></li>
-            <li><a id="sort-name">Sortuj alfabetycznie</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </header>
+<body class="min-h-screen bg-base-200">
+    <main class="container mx-auto max-w-7xl p-4 sm:p-6">
 
-  <main class="max-w-7xl mx-auto px-4 space-y-6">
-    
-    <section class="collapse collapse-arrow bg-base-100 shadow-sm border border-base-300" id="filter-collapse">
-      <input type="checkbox" id="filter-toggle" /> 
-      <div class="collapse-title text-lg font-medium flex justify-between items-center">
-        <span>Filtry i Wyszukiwanie</span>
-      </div>
-      <div class="collapse-content space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-          <div class="form-control">
-            <label class="label"><span class="label-text">Szukaj w tytule</span></label>
-            <input type="text" id="filter-title" placeholder="Wpisz frazę..." class="input input-bordered w-full input-sm" />
-          </div>
-          <div class="form-control">
-            <label class="label"><span class="label-text">Osoba odpowiedzialna</span></label>
-            <input type="text" id="filter-person" placeholder="Imię i nazwisko..." class="input input-bordered w-full input-sm" />
-          </div>
-          <div class="form-control">
-    <label class="label">
-        <span class="label-text">Status</span>
-    </label>
+        <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h1 class="text-3xl font-bold">Lista zadań w projekcie</h1>
+                <p class="text-base-content/60">Zarządzaj zadaniami swojego projektu</p>
+            </div>
 
-    <div class="dropdown w-full">
-            <label tabindex="0" class="btn btn-outline btn-sm w-full justify-between">
-                Wybierz statusy
-                <span>▼</span>
-            </label>
+            <div class="flex flex-wrap gap-2">
+                <button id="btn-add-task" class="btn btn-primary btn-sm sm:btn-md">
+                    <i data-lucide="plus" class="h-5 w-5"></i>
+                    Dodaj nowe zadanie
+                </button>
 
-            <div tabindex="0" class="dropdown-content z-[1] p-3 shadow bg-base-100 rounded-box w-full">
-                <label class="label cursor-pointer justify-start gap-3">
-                    <input type="checkbox" value="do zrobienia" class="checkbox filter-status">
-                    <span class="label-text">Do zrobienia</span>
-                </label>
+                <button id="btn-clear-all" class="btn btn-error btn-sm sm:btn-md">
+                    <i data-lucide="trash-2" class="h-5 w-5"></i>
+                    Wyczyść listę
+                </button>
 
-                <label class="label cursor-pointer justify-start gap-3">
-                    <input type="checkbox" value="w trakcie" class="checkbox filter-status">
-                    <span class="label-text">W trakcie</span>
-                </label>
+                <div class="dropdown dropdown-end">
+                    <div tabindex="0" role="button" class="btn btn-neutral btn-sm sm:btn-md">
+                        <i data-lucide="settings" class="h-5 w-5"></i>
+                        Opcje
+                    </div>
 
-                <label class="label cursor-pointer justify-start gap-3">
-                    <input type="checkbox" value="zrobione" class="checkbox filter-status">
-                    <span class="label-text">Zrobione</span>
-                </label>
+                    <ul tabindex="0" class="dropdown-content z-[50] menu mt-1 w-64 rounded-box bg-base-100 p-2 shadow">
+                        <li>
+                            <button id="sort-desc">
+                                <i data-lucide="arrow-down" class="h-4 w-4"></i>
+                                Sortuj od najnowszych
+                            </button>
+                        </li>
+                        <li>
+                            <button id="sort-asc">
+                                <i data-lucide="arrow-up" class="h-4 w-4"></i>
+                                Sortuj od najstarszych
+                            </button>
+                        </li>
+                        <li>
+                            <button id="sort-name">
+                                <i data-lucide="arrow-down-a-z" class="h-4 w-4"></i>
+                                Sortuj alfabetycznie
+                            </button>
+                        </li>
+                        <li>
+                            <button id="btn-show-json">
+                                <i data-lucide="braces" class="h-4 w-4"></i>
+                                Pokaż JSON
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-          <div class="form-control">
-    <label class="label">
-        <span class="label-text">Priorytet</span>
-    </label>
 
-    <div class="dropdown w-full">
-        <label tabindex="0" class="btn btn-outline btn-sm w-full justify-between">
-            Wybierz priorytety
-            <span>▼</span>
-        </label>
+        <section class="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
+            <div class="stat rounded-xl bg-base-100 shadow-sm">
+                <div class="stat-title">Wszystkie</div>
+                <div id="stat-total" class="stat-value text-xl">0</div>
+            </div>
 
-        <div tabindex="0" class="dropdown-content z-[1] p-3 shadow bg-base-100 rounded-box w-full">
-            <label class="label cursor-pointer justify-start gap-3">
-                <input type="checkbox" value="niski" class="checkbox filter-priority">
-                <span class="label-text">Niski</span>
-            </label>
+            <div class="stat rounded-xl bg-base-100 shadow-sm">
+                <div class="stat-title">Do zrobienia</div>
+                <div id="stat-todo" class="stat-value text-xl">0</div>
+            </div>
 
-            <label class="label cursor-pointer justify-start gap-3">
-                <input type="checkbox" value="sredni" class="checkbox filter-priority">
-                <span class="label-text">Średni</span>
-            </label>
+            <div class="stat rounded-xl bg-base-100 shadow-sm">
+                <div class="stat-title">W trakcie</div>
+                <div id="stat-in-progress" class="stat-value text-xl">0</div>
+            </div>
 
-            <label class="label cursor-pointer justify-start gap-3">
-                <input type="checkbox" value="wysoki" class="checkbox filter-priority">
-                <span class="label-text">Wysoki</span>
-            </label>
+            <div class="stat rounded-xl bg-base-100 shadow-sm">
+                <div class="stat-title">Zrobione</div>
+                <div id="stat-done" class="stat-value text-xl">0</div>
+            </div>
+
+            <div class="stat col-span-2 rounded-xl bg-base-100 shadow-sm sm:col-span-1">
+                <div class="stat-title">Zaległe</div>
+                <div id="stat-overdue" class="stat-value text-xl">0</div>
+            </div>
+        </section>
+
+        <section class="mb-6 overflow-visible rounded-xl border border-base-300 bg-base-100 shadow-sm">
+            <div class="collapse collapse-arrow overflow-visible" id="filter-collapse">
+                <input type="checkbox" id="filter-toggle">
+
+                <div class="collapse-title flex items-center justify-between text-lg font-medium">
+                    <span>Filtry i wyszukiwanie</span>
+                    <span id="filter-counter" class="mr-6 hidden badge badge-primary">0</span>
+                </div>
+
+                <div class="collapse-content overflow-visible">
+                    <div class="grid grid-cols-1 gap-4 pt-2 md:grid-cols-2 lg:grid-cols-4">
+
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Szukaj w tytule</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="filter-title"
+                                placeholder="Wpisz frazę..."
+                                class="input input-bordered input-sm w-full"
+                            >
+                        </div>
+
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Osoba odpowiedzialna</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="filter-person"
+                                placeholder="Imię i nazwisko..."
+                                class="input input-bordered input-sm w-full"
+                            >
+                        </div>
+
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Status</span>
+                            </label>
+
+                            <div class="w-full">
+                                <button
+                                    type="button"
+                                    id="status-filter-button"
+                                    class="btn btn-outline btn-sm w-full justify-between"
+                                >
+                                    <span id="status-filter-label">Wybierz statusy</span>
+                                    <span>▼</span>
+                                </button>
+
+                                <div
+                                    id="status-filter-menu"
+                                    class="mt-2 hidden rounded-box border border-base-300 bg-base-100 p-3 shadow-sm"
+                                >
+                                    <label class="flex cursor-pointer items-center gap-3 py-2">
+                                        <input type="checkbox" value="do zrobienia" class="checkbox filter-status">
+                                        <span>Do zrobienia</span>
+                                    </label>
+
+                                    <label class="flex cursor-pointer items-center gap-3 py-2">
+                                        <input type="checkbox" value="w trakcie" class="checkbox filter-status">
+                                        <span>W trakcie</span>
+                                    </label>
+
+                                    <label class="flex cursor-pointer items-center gap-3 py-2">
+                                        <input type="checkbox" value="zrobione" class="checkbox filter-status">
+                                        <span>Zrobione</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Priorytet</span>
+                            </label>
+
+                            <div class="w-full">
+                                <button
+                                    type="button"
+                                    id="priority-filter-button"
+                                    class="btn btn-outline btn-sm w-full justify-between"
+                                >
+                                    <span id="priority-filter-label">Wybierz priorytety</span>
+                                    <span>▼</span>
+                                </button>
+
+                                <div
+                                    id="priority-filter-menu"
+                                    class="mt-2 hidden rounded-box border border-base-300 bg-base-100 p-3 shadow-sm"
+                                >
+                                    <label class="flex cursor-pointer items-center gap-3 py-2">
+                                        <input type="checkbox" value="niski" class="checkbox filter-priority">
+                                        <span>Niski</span>
+                                    </label>
+
+                                    <label class="flex cursor-pointer items-center gap-3 py-2">
+                                        <input type="checkbox" value="sredni" class="checkbox filter-priority">
+                                        <span>Średni</span>
+                                    </label>
+
+                                    <label class="flex cursor-pointer items-center gap-3 py-2">
+                                        <input type="checkbox" value="wysoki" class="checkbox filter-priority">
+                                        <span>Wysoki</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="overflow-x-auto rounded-xl bg-base-100 shadow-sm">
+            <table class="table w-full">
+                <thead>
+                    <tr class="bg-base-200 text-base font-bold text-base-content">
+                        <th>Tytuł</th>
+                        <th>Osoba</th>
+                        <th>Priorytet</th>
+                        <th>Status</th>
+                        <th>Termin</th>
+                        <th>Uwagi</th>
+                        <th>Termin</th>
+                        <th class="text-right">Akcje</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tasks-table-body"></tbody>
+            </table>
+        </section>
+    </main>
+
+    <dialog id="modal-task" class="modal">
+        <div class="modal-box max-w-2xl">
+            <h3 id="modal-task-title" class="mb-6 text-2xl font-bold">
+                Dodaj nowe zadanie
+            </h3>
+
+            <form id="form-task" class="space-y-4">
+                <input type="hidden" id="task-id">
+
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Tytuł *</span>
+                    </label>
+                    <input id="task-title" type="text" class="input input-bordered w-full" required>
+                </div>
+
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Opis</span>
+                    </label>
+                    <textarea id="task-desc" class="textarea textarea-bordered w-full"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Priorytet *</span>
+                        </label>
+                        <select id="task-priority" class="select select-bordered w-full" required>
+                            <option value="">Wybierz</option>
+                            <option value="niski">Niski</option>
+                            <option value="sredni">Średni</option>
+                            <option value="wysoki">Wysoki</option>
+                        </select>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Status *</span>
+                        </label>
+                        <select id="task-status" class="select select-bordered w-full" required>
+                            <option value="">Wybierz</option>
+                            <option value="do zrobienia">Do zrobienia</option>
+                            <option value="w trakcie">W trakcie</option>
+                            <option value="zrobione">Zrobione</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Termin *</span>
+                        </label>
+                        <input id="task-due-date" type="date" class="input input-bordered w-full" required>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Osoba odpowiedzialna *</span>
+                        </label>
+                        <input id="task-person" type="text" class="input input-bordered w-full" required>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex flex-wrap justify-between gap-2">
+                    <button
+                        type="button"
+                        id="btn-clone-task"
+                        class="btn btn-secondary hidden"
+                    >
+                        <i data-lucide="copy" class="h-5 w-5"></i>
+                        Klonuj
+                    </button>
+
+                    <div class="ml-auto flex gap-2">
+                        <button type="button" class="btn" onclick="document.getElementById('modal-task').close()">
+                            Anuluj
+                        </button>
+
+                        <button type="submit" class="btn btn-primary">
+                            Zapisz
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </div>
-</div>
+    </dialog>
+
+    <dialog id="modal-details" class="modal">
+        <div class="modal-box max-w-4xl">
+            <h3 id="detail-title" class="text-2xl font-bold"></h3>
+
+            <p id="detail-meta" class="mt-2 text-sm text-base-content/60"></p>
+
+            <div class="my-5 rounded-lg bg-base-200 p-4">
+                <p id="detail-desc" class="whitespace-pre-wrap"></p>
+            </div>
+
+            <div class="mb-3 flex items-center justify-between">
+                <h4 class="text-xl font-bold">Uwagi</h4>
+            </div>
+
+            <form id="form-note" class="mb-5 space-y-3">
+                <input type="hidden" id="note-id">
+
+                <textarea
+                    id="note-text"
+                    class="textarea textarea-bordered w-full"
+                    placeholder="Treść uwagi..."
+                ></textarea>
+
+                <div class="flex gap-2">
+                    <button type="submit" id="btn-save-note" class="btn btn-primary">
+                        Dodaj uwagę
+                    </button>
+
+                    <button type="button" id="btn-cancel-note" class="btn hidden">
+                        Anuluj
+                    </button>
+                </div>
+            </form>
+
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <thead>
+                        <tr class="bg-base-200">
+                            <th>Treść</th>
+                            <th>Data</th>
+                            <th class="text-right">Akcje</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="notes-table-body"></tbody>
+                </table>
+            </div>
+
+            <div class="modal-action">
+                <button
+                    type="button"
+                    class="btn"
+                    onclick="document.getElementById('modal-details').close()"
+                >
+                    Zamknij
+                </button>
+            </div>
         </div>
-      </div>
-    </section>
+    </dialog>
 
-    <section class="bg-base-100 shadow-md rounded-box overflow-hidden">
-      <div class="overflow-x-auto">
-        <table class="table w-full">
-          <thead>
-            <tr>
-              <th>Tytuł</th>
-              <th>Osoba</th>
-              <th>Priorytet</th>
-              <th>Status</th>
-              <th>Termin</th>
-              <th>Uwagi</th>
-              <th>Zaległe?</th>
-              <th class="text-right">Akcje</th>
-            </tr>
-          </thead>
-          <tbody id="tasks-table-body">
-          </tbody>
-        </table>
-      </div>
-    </section>
+    <dialog id="modal-json" class="modal">
+        <div class="modal-box max-w-4xl">
+            <h3 class="mb-4 text-2xl font-bold">Dane JSON</h3>
 
-    <section class="stats stats-vertical lg:stats-horizontal shadow w-full bg-base-100">
-      <div class="stat">
-        <div class="stat-title">Wszystkie zadania</div>
-        <div class="stat-value text-primary" id="stat-total">0</div>
-      </div>
-      <div class="stat">
-        <div class="stat-title">Do zrobienia</div>
-        <div class="stat-value text-neutral" id="stat-todo">0</div>
-      </div>
-      <div class="stat">
-        <div class="stat-title">W trakcie</div>
-        <div class="stat-value text-info" id="stat-in-progress">0</div>
-      </div>
-      <div class="stat">
-        <div class="stat-title">Zrobione</div>
-        <div class="stat-value text-success" id="stat-done">0</div>
-      </div>
-      <div class="stat">
-        <div class="stat-title">Zaległe</div>
-        <div class="stat-value text-error" id="stat-overdue">0</div>
-      </div>
-    </section>
-  </main>
+            <textarea
+                id="json-output"
+                class="textarea textarea-bordered h-96 w-full font-mono text-sm"
+                readonly
+            ></textarea>
 
-  <dialog id="modal-task" class="modal">
-    <div class="modal-box max-w-lg">
-      <h3 class="font-bold text-lg mb-4" id="modal-task-title">Dodaj nowe zadanie</h3>
-      <form id="form-task" class="space-y-4">
-        <input type="hidden" id="task-id" />
-        
-        <div class="form-control">
-          <label class="label"><span class="label-text">Tytuł zadania *</span></label>
-          <input type="text" id="task-title" required class="input input-bordered w-full" />
+            <div class="modal-action">
+                <button
+                    type="button"
+                    class="btn"
+                    onclick="document.getElementById('modal-json').close()"
+                >
+                    Zamknij
+                </button>
+            </div>
         </div>
-        
-        <div class="form-control">
-          <label class="label"><span class="label-text">Opis</span></label>
-          <textarea id="task-desc" class="textarea textarea-bordered w-full" rows="3"></textarea>
-        </div>
+    </dialog>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="form-control">
-            <label class="label"><span class="label-text">Priorytet *</span></label>
-            <select id="task-priority" required class="select select-bordered w-full">
-              <option value="" disabled selected>Wybierz...</option>
-              <option value="niski">Niski</option>
-              <option value="sredni">Średni</option>
-              <option value="wysoki">Wysoki</option>
-            </select>
-          </div>
+    <div id="toast-container" class="toast toast-end toast-bottom z-[100]"></div>
 
-          <div class="form-control">
-            <label class="label"><span class="label-text">Status *</span></label>
-            <select id="task-status" required class="select select-bordered w-full">
-              <option value="" disabled selected>Wybierz...</option>
-              <option value="do zrobienia">Do zrobienia</option>
-              <option value="w trakcie">W trakcie</option>
-              <option value="zrobione">Zrobione</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="form-control">
-            <label class="label"><span class="label-text">Termin wykonania *</span></label>
-            <input type="date" id="task-due-date" required class="input input-bordered w-full" />
-          </div>
-
-          <div class="form-control">
-            <label class="label"><span class="label-text">Osoba odpowiedzialna *</span></label>
-            <input type="text" id="task-person" required class="input input-bordered w-full" />
-          </div>
-        </div>
-
-        <div class="modal-action">
-          <button type="button" class="btn" onclick="document.getElementById('modal-task').close()">Anuluj</button>
-          <button type="submit" class="btn btn-primary">Zapisz</button>
-        </div>
-      </form>
-    </div>
-  </dialog>
-
-  <dialog id="modal-details" class="modal">
-    <div class="modal-box max-w-2xl">
-      <h3 class="font-bold text-xl mb-2" id="detail-title">Szczegóły zadania</h3>
-      <p class="text-sm text-gray-500 mb-4" id="detail-meta"></p>
-      
-      <div class="bg-base-200 p-3 rounded-box mb-6">
-        <h4 class="font-semibold text-sm mb-1">Opis:</h4>
-        <p id="detail-desc" class="text-sm whitespace-pre-wrap">Brak opisu.</p>
-      </div>
-
-      <hr class="my-4" />
-
-      <h4 class="font-bold text-lg mb-3">Uwagi do zadania</h4>
-
-      <form id="form-note" class="flex gap-2 mb-4">
-        <input type="hidden" id="note-id" />
-        <input type="text" id="note-text" placeholder="Dodaj treść uwagi..." required class="input input-bordered flex-1 input-sm sm:input-md" />
-        <button type="submit" class="btn btn-primary btn-sm sm:btn-md" id="btn-save-note">Dodaj uwagę</button>
-        <button type="button" class="btn btn-ghost btn-sm sm:btn-md hidden" id="btn-cancel-note">Anuluj edycję</button>
-      </form>
-
-      <div class="overflow-x-auto max-h-48 overflow-y-auto border border-base-200 rounded-box mb-4">
-        <table class="table table-zebra w-full table-xs sm:table-sm">
-          <thead>
-            <tr>
-              <th>Treść</th>
-              <th>Data utworzenia</th>
-              <th class="text-right">Akcje</th>
-            </tr>
-          </thead>
-          <tbody id="notes-table-body">
-          </tbody>
-        </table>
-      </div>
-
-      <div class="modal-action">
-        <button type="button" class="btn" onclick="document.getElementById('modal-details').close()">Zamknij</button>
-      </div>
-    </div>
-  </dialog>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

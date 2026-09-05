@@ -7,7 +7,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- <script src="https://unpkg.com/lucide@latest"></script> -->
 </head>
 
 <body class="min-h-screen bg-base-200">
@@ -21,18 +21,18 @@
 
             <div class="flex flex-wrap gap-2">
                 <button id="btn-add-task" class="btn btn-primary btn-sm sm:btn-md">
-                    <i data-lucide="plus" class="h-5 w-5"></i>
+                    <!-- <i data-lucide="plus" class="h-5 w-5"></i> -->
                     Dodaj nowe zadanie
                 </button>
 
                 <button id="btn-clear-all" class="btn btn-error btn-sm sm:btn-md">
-                    <i data-lucide="trash-2" class="h-5 w-5"></i>
+                    <!-- <i data-lucide="trash-2" class="h-5 w-5"></i> -->
                     Wyczyść listę
                 </button>
 
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn btn-neutral btn-sm sm:btn-md">
-                        <i data-lucide="settings" class="h-5 w-5"></i>
+                        <!-- <i data-lucide="settings" class="h-5 w-5"></i> -->
                         Opcje
                     </div>
 
@@ -134,33 +134,26 @@
                                 <span class="label-text">Status</span>
                             </label>
 
-                            <div class="w-full">
-                                <button
-                                    type="button"
-                                    id="status-filter-button"
-                                    class="btn btn-outline btn-sm w-full justify-between"
-                                >
-                                    <span id="status-filter-label">Wybierz statusy</span>
+                            <div class="dropdown w-full">
+                                <div tabindex="0" role="button" class="btn btn-outline btn-sm w-full justify-between">
+                                    Wybierz statusy
                                     <span>▼</span>
-                                </button>
+                                </div>
 
-                                <div
-                                    id="status-filter-menu"
-                                    class="mt-2 hidden rounded-box border border-base-300 bg-base-100 p-3 shadow-sm"
-                                >
-                                    <label class="flex cursor-pointer items-center gap-3 py-2">
+                                <div tabindex="0" class="dropdown-content z-[50] mt-1 w-full rounded-box border border-base-300 bg-base-100 p-3 shadow-lg">
+                                    <label class="label cursor-pointer justify-start gap-3">
                                         <input type="checkbox" value="do zrobienia" class="checkbox filter-status">
-                                        <span>Do zrobienia</span>
+                                        <span class="label-text">Do zrobienia</span>
                                     </label>
 
-                                    <label class="flex cursor-pointer items-center gap-3 py-2">
+                                    <label class="label cursor-pointer justify-start gap-3">
                                         <input type="checkbox" value="w trakcie" class="checkbox filter-status">
-                                        <span>W trakcie</span>
+                                        <span class="label-text">W trakcie</span>
                                     </label>
 
-                                    <label class="flex cursor-pointer items-center gap-3 py-2">
+                                    <label class="label cursor-pointer justify-start gap-3">
                                         <input type="checkbox" value="zrobione" class="checkbox filter-status">
-                                        <span>Zrobione</span>
+                                        <span class="label-text">Zrobione</span>
                                     </label>
                                 </div>
                             </div>
@@ -171,33 +164,26 @@
                                 <span class="label-text">Priorytet</span>
                             </label>
 
-                            <div class="w-full">
-                                <button
-                                    type="button"
-                                    id="priority-filter-button"
-                                    class="btn btn-outline btn-sm w-full justify-between"
-                                >
-                                    <span id="priority-filter-label">Wybierz priorytety</span>
+                            <div class="dropdown w-full">
+                                <div tabindex="0" role="button" class="btn btn-outline btn-sm w-full justify-between">
+                                    Wybierz priorytety
                                     <span>▼</span>
-                                </button>
+                                </div>
 
-                                <div
-                                    id="priority-filter-menu"
-                                    class="mt-2 hidden rounded-box border border-base-300 bg-base-100 p-3 shadow-sm"
-                                >
-                                    <label class="flex cursor-pointer items-center gap-3 py-2">
+                                <div tabindex="0" class="dropdown-content z-[50] mt-1 w-full rounded-box border border-base-300 bg-base-100 p-3 shadow-lg">
+                                    <label class="label cursor-pointer justify-start gap-3">
                                         <input type="checkbox" value="niski" class="checkbox filter-priority">
-                                        <span>Niski</span>
+                                        <span class="label-text">Niski</span>
                                     </label>
 
-                                    <label class="flex cursor-pointer items-center gap-3 py-2">
+                                    <label class="label cursor-pointer justify-start gap-3">
                                         <input type="checkbox" value="sredni" class="checkbox filter-priority">
-                                        <span>Średni</span>
+                                        <span class="label-text">Średni</span>
                                     </label>
 
-                                    <label class="flex cursor-pointer items-center gap-3 py-2">
+                                    <label class="label cursor-pointer justify-start gap-3">
                                         <input type="checkbox" value="wysoki" class="checkbox filter-priority">
-                                        <span>Wysoki</span>
+                                        <span class="label-text">Wysoki</span>
                                     </label>
                                 </div>
                             </div>

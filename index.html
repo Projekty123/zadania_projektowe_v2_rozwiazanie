@@ -7,7 +7,16 @@
 
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- <script src="https://unpkg.com/lucide@latest"></script> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- <style>
+        .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+        }
+    </style> -->
 </head>
 
 <body class="min-h-screen bg-base-200">
@@ -21,18 +30,18 @@
 
             <div class="flex flex-wrap gap-2">
                 <button id="btn-add-task" class="btn btn-primary btn-sm sm:btn-md">
-                    <!-- <i data-lucide="plus" class="h-5 w-5"></i> -->
+                    <span class="material-icons">add</span>
                     Dodaj nowe zadanie
                 </button>
 
                 <button id="btn-clear-all" class="btn btn-error btn-sm sm:btn-md">
-                    <!-- <i data-lucide="trash-2" class="h-5 w-5"></i> -->
+                    <span class="material-icons">delete</span>
                     Wyczyść listę
                 </button>
 
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn btn-neutral btn-sm sm:btn-md">
-                        <!-- <i data-lucide="settings" class="h-5 w-5"></i> -->
+                        <span class="material-icons">menu</span>
                         Opcje
                     </div>
 
